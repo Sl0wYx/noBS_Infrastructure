@@ -21,7 +21,7 @@ Contains:
 ### Playing on the server
 Player enters IP of AzureVM to join a server -> HAProxy listens on the connecting port, preserves IP -> Tailscale receives player and tunnels it to homelab machine all using it's own IPs -> Homelab receives the player and lets him to join the Minecraft server.
 
-### logging and viewing statistics on the webpage
+### Logging and viewing statistics on the webpage
 Player logins on the website -> NodeJS requests accounts and statistics from FastAPI inside the Azure -> FastAPI using Tailscale tunnels gets access to the files stored in HomeLab.
 FastAPI returns parsed data to NodeJS -> NodeJS allows logging in, and shows the player data.
 
