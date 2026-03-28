@@ -10,6 +10,9 @@ Virtual machine hosted on azure. Links outer world with Minecraft server using T
 Contains:
 - HAProxy: for preserving IP of player when connecting to the server.
 - FastAPI: for getting and parsing data from the homelab without opening it to the world.
+- TelegramBot: for announcements automation.
+- Docker: FastAPI and TelegramBot are deployed using docker compose.
+- Announcements: messege.json and images, needed for the announcements.
 ### Homelab
 Server which currently sits at my home.
 Contains:
@@ -25,5 +28,9 @@ Player enters IP of AzureVM to join a server -> HAProxy listens on the connectin
 Player logins on the website -> NodeJS requests accounts and statistics from FastAPI inside the Azure -> FastAPI using Tailscale tunnels gets access to the files stored in HomeLab.
 FastAPI returns parsed data to NodeJS -> NodeJS allows logging in, and shows the player data.
 
+### Message repost
+TelegramBot receieves the message -> Converts it into markdown and json structure with message, image url and data -> NodeJS reads it.
+
 ## Links
 API repo: https://github.com/Sl0wYx/noBS_ServerAPI
+Bot repo: https://github.com/Sl0wYx/noBS_BotIntegrator
