@@ -147,7 +147,7 @@ resource "azurerm_network_interface" "main" {
   }
 }
 
-resource "azurerm_virtual_machine" "main" {
+resource "azurerm_linux_virtual_machine" "main" {
   name                  = "minecraft-tunnel"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
@@ -167,7 +167,7 @@ resource "azurerm_virtual_machine" "main" {
     version   = "latest"
   }
   storage_os_disk {
-    name              = "minecraft-tunnel_disk1_cdd39a53273149819ead25b5ceef9a19"
+    name              = "minecraft-tunnel_disk1"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
