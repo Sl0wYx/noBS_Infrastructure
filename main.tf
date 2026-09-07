@@ -147,42 +147,35 @@ resource "azurerm_network_interface" "main" {
   }
 }
 
-resource "azurerm_linux_virtual_machine" "main" {
-  name                  = "minecraft-tunnel"
-  location              = azurerm_resource_group.rg.location
-  resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [azurerm_network_interface.main.id]
-  vm_size               = "Standard_B2ats_v2"
+ resource "azurerm_linux_virtual_machine" "main" {
+    name                  = "minecraft-tunnel"
+    location              = azurerm_resource_group.rg.location
+    resource_group_name   = azurerm_resource_group.rg.name
+    network_interface_ids = [azurerm_network_interface.main.id]
+    size                  = "Standard_B2ats_v2"
 
-  # Uncomment this line to delete the OS disk automatically when deleting the VM
-  # delete_os_disk_on_termination = true
-
-  # Uncomment this line to delete the data disks automatically when deleting the VM
-  # delete_data_disks_on_termination = true
-
-  storage_image_reference {
-    publisher = "debian"
-    offer     = "debian-11"
-    sku       = "11-gen2"
-    version   = "latest"
-  }
-  storage_os_disk {
-    name              = "minecraft-tunnel_disk1"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Premium_LRS"
-    disk_size_gb    = 30
-  }
-  os_profile {
     computer_name  = "minecraft-tunnel"
     admin_username = "noboobs"
-  }
 
-  os_profile_linux_config {
     disable_password_authentication = true
-    ssh_keys{
-      key_data = var.ssh_key
-        path     = "/home/noboobs/.ssh/authorized_keys"
+
+    admin_ssh_key {
+      username   = "noboobs"
+      public_key = var.ssh_key
+    }
+
+    source_image_reference {
+      publisher = "debian"
+      offer     = "debian-11"
+      sku       = "11-gen2"
+      version   = "latest"
+    }
+
+    os_disk {
+      name                 = "minecraft-tunnel-osdisk"
+      caching              = "ReadWrite"
+      storage_account_type = "Premium_LRS"
+      disk_size_gb         = 30
     }
   }
 }
